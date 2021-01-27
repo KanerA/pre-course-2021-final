@@ -17,7 +17,7 @@ addBtn.addEventListener('click', addToDo);
 
 function addToDo(event){
     event.preventDefault();
-    // ----- append the input text to text div ---- //
+    // ------ check if input is empty ------ //
     let inputElem = document.getElementById('text-input');
     let textInput = inputElem.value;
     if(textInput === ""){
@@ -58,4 +58,8 @@ function addToDo(event){
     // ----- create an object for each to-do task ------ //
     todoList.push(new toDoTask(priority, todoText, timeSQL));
     
-}   
+    // ------ adding counter of to-do's ------- //
+    let arrCounter = todoList.length;
+    let counter = document.querySelector('#counter');
+    counter.innerHTML = arrCounter + "To-Do's";
+}
