@@ -25,10 +25,6 @@ function addToDo(event){
         return false;
     }
     
-    // ----- clear input field and focus for next input --- //
-    inputElem.value = "";
-    inputElem.focus();
-    
     // ------ create the divs for each To-Do task ------- //
     const todoDiv = document.createElement('div');
     todoDiv.classList.add('todo-container');
@@ -38,29 +34,33 @@ function addToDo(event){
     todoDiv.appendChild(priority);
     
     const createdAt = document.createElement('div');
-    createdAt.classList.add('todo-createdAt');
+    createdAt.classList.add('todo-created-at');
     todoDiv.appendChild(createdAt);
     
     const todoText = document.createElement('div');
     todoText.classList.add('todo-text');
     todoDiv.appendChild(todoText);
     
-
-    viewSection.appendChild(todoDiv);
     
+    viewSection.appendChild(todoDiv);
+
     // ----- adding data to each of the divs ----- //
     todoText.innerHTML = textInput;
     priority.innerHTML = document.getElementById('priority-selector').value;
     let date = new Date();
-    let timeSQL = date.toLocaleString("SQL");
+    let timeSQL = date.toISOString().slice(0,19).replace('T',' ');
     createdAt.innerHTML = timeSQL;
-
+    
     // ----- create an object for each to-do task ------ //
     todoList.push(new toDoTask(priority, todoText, timeSQL));
     
     // ------ adding counter of to-do's ------- //
     let arrCounter = todoList.length;
     let counter = document.querySelector('#counter');
-    counter.innerHTML = arrCounter + "To-Do's";
+    counter.innerHTML = arrCounter + " To-Do's";
+    
+    // ----- clear input field and focus for next input --- //
+    inputElem.value = "";
+    inputElem.focus();
 }
 
