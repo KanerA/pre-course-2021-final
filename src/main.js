@@ -19,12 +19,21 @@ function addToDo(event){
     createdAt.classList.add('todo-createdAt');
 
     const priority = document.createElement('div');
-    priority.classList.add('todo-priority')
-    
+    priority.classList.add('todo-priority');
+
     todoDiv.appendChild(priority);
     todoDiv.appendChild(createdAt);
     todoDiv.appendChild(todoText);
-
+    
     viewSection.appendChild(todoDiv);
+
+    // ----- append the input text to text div ---- //
+    let inputElem = document.getElementById('text-input');
+    let textInput = inputElem.value;
+    todoText.innerHTML = textInput;
+    
+    // ----- clear input field and focus for next input --- //
+    inputElem.value = "";
+    inputElem.focus();
 
 }
