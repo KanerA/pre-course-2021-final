@@ -57,6 +57,5 @@ function addToDo(event){
 
     // ----- create an object for each to-do task ------ //
     todoList.push(new toDoTask(priority, todoText, timeSQL));
-    console.log(todoList);
     
 }   
