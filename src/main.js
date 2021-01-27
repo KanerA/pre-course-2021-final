@@ -41,5 +41,8 @@ function addToDo(event){
     
     // ----- adding data to each of the divs ----- //
     todoText.innerHTML = textInput;
-
+    priority.innerHTML = document.getElementById('priority-selector').value;
+    let date = new Date();
+    let timeSQL = date.toLocaleString("SQL");
+    createdAt.innerHTML = timeSQL;
 }
