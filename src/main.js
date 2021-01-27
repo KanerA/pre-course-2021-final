@@ -1,6 +1,14 @@
 const addBtn = document.querySelector('#add-button');
 const viewSection = document.querySelector('.view-section');
+const todoList =[];
 
+class toDoTask {
+    constructor(priority, text, date){
+        this.priority = priority;
+        this.text = text;
+        this.date = date; 
+    }
+}
 // ---------------- Event Listeners --------------------- // 
 
 addBtn.addEventListener('click', addToDo);
@@ -21,6 +29,7 @@ function addToDo(event){
     inputElem.value = "";
     inputElem.focus();
     
+    // ------ create the divs for each To-Do task ------- //
     const todoDiv = document.createElement('div');
     todoDiv.classList.add('todo-container');
     
@@ -45,4 +54,9 @@ function addToDo(event){
     let date = new Date();
     let timeSQL = date.toLocaleString("SQL");
     createdAt.innerHTML = timeSQL;
-}
+
+    // ----- create an object for each to-do task ------ //
+    todoList.push(new toDoTask(priority, todoText, timeSQL));
+    console.log(todoList);
+    
+}   
