@@ -33,19 +33,19 @@ function addToDo(event){
     const todoDiv = document.createElement('div');
     todoDiv.classList.add('todo-container');
     
-    const todoText = document.createElement('div');
-    todoText.classList.add('todo-text');
+    const priority = document.createElement('div');
+    priority.classList.add('todo-priority');
+    todoDiv.appendChild(priority);
     
     const createdAt = document.createElement('div');
     createdAt.classList.add('todo-createdAt');
-    
-    const priority = document.createElement('div');
-    priority.classList.add('todo-priority');
-    
-    todoDiv.appendChild(priority);
     todoDiv.appendChild(createdAt);
+    
+    const todoText = document.createElement('div');
+    todoText.classList.add('todo-text');
     todoDiv.appendChild(todoText);
     
+
     viewSection.appendChild(todoDiv);
     
     // ----- adding data to each of the divs ----- //
@@ -63,3 +63,4 @@ function addToDo(event){
     let counter = document.querySelector('#counter');
     counter.innerHTML = arrCounter + "To-Do's";
 }
+
