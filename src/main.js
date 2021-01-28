@@ -2,7 +2,7 @@ const addBtn = document.querySelector('#add-button');
 const viewSection = document.querySelector('.view-section');
 const sortBtn = document.querySelector('#sort-button');
 
-const todoList =[];
+let todoList =[];
 
 class toDoTask {
     constructor(priority, text, date){
@@ -17,9 +17,9 @@ addBtn.addEventListener('click', addToDo);
 sortBtn.addEventListener('click', sortToDo);
 document.addEventListener('DOMContentLoaded',async () => {
     let myContent = await getTodoJson();
-    console.log(myContent);
     for(let i = 0; i < myContent.length; i++){
-        createListItem(i);
+        createListItem(myContent, i);
+        todoList = myContent;
     }
 });
 
@@ -65,15 +65,14 @@ function addToDo(event){
     todoList.push(new toDoTask(priority.innerHTML, textInput, timeSQL));
 
     // ------ adding counter of to-do's ------- //
-    let arrCounter = todoList.length;
     let counter = document.querySelector('#counter');
-    counter.innerHTML = arrCounter + " To-Do's";
+    counter.innerHTML = todoList.length + " To-Do's";
     
     // ----- clear input field and focus for next input --- //
     inputElem.value = "";
     inputElem.focus();
 
-    myTodo = {'myTodo': todoList};
+    myTodo = {'my-todo': todoList};
     updateTodoJson();
 }
 
@@ -84,34 +83,31 @@ function sortToDo(){
     
     viewSection.innerHTML = "";
     for(let i=0; i < todoList.length; i++){
-        createListItem(i);
+        createListItem(todoList,i);
     }
 }
 
-function createListItem(index){
-    if(todoList === []){
-
+function createListItem(myArr, index){
         const todoDiv = document.createElement('div');
         todoDiv.classList.add('todo-container');
-        console.log(todoList);
         priorityDiv = document.createElement('div');
         priorityDiv.classList.add('todo-priority');
-        priorityDiv.append(todoList[index].priority);
+        priorityDiv.append(myArr[index].priority);
         
         createdAtDiv = document.createElement('div');
         createdAtDiv.classList.add('todo-created-at');
-        createdAtDiv.append(todoList[index].date);
+        createdAtDiv.append(myArr[index].date);
         
         textDiv = document.createElement('div');
         textDiv.classList.add('todo-text');
-        textDiv.append(todoList[index].text);
+        textDiv.append(myArr[index].text);
         
         todoDiv.append(priorityDiv);
         todoDiv.append(createdAtDiv);
         todoDiv.append(textDiv);
         
         viewSection.append(todoDiv);
-    }
+    
 }
 
 async function updateTodoJson(){
@@ -123,5 +119,5 @@ async function getTodoJson(){
     let jsonResponse = await response.json(); 
     let recordResponse = jsonResponse["record"];
     let myList = recordResponse; 
-    return myList.myTodo;      
+    return myList['my-todo'];      
 }
