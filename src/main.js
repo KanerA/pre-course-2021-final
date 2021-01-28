@@ -55,8 +55,8 @@ function addToDo(event){
     createdAt.innerHTML = timeSQL;
     
     // ----- create an object for each to-do task ------ //
-    todoList.push(new toDoTask(priority, todoText, timeSQL));
-    
+    todoList.push(new toDoTask(priority.innerHTML, textInput, timeSQL));
+
     // ------ adding counter of to-do's ------- //
     let arrCounter = todoList.length;
     let counter = document.querySelector('#counter');
@@ -70,16 +70,30 @@ function addToDo(event){
 
 function sortToDo(){
     todoList.sort(function(a, b){
-        return b.priority.innerHTML - a.priority.innerHTML;
+        return b.priority - a.priority;
     });
 
     viewSection.innerHTML = "";
     for(let i=0; i < todoList.length; i++){
         const todoDiv = document.createElement('div');
         todoDiv.classList.add('todo-container');
-        todoDiv.append(todoList[i].priority);
-        todoDiv.append(todoList[i].date);
-        todoDiv.append(todoList[i].text);
+    
+        priorityDiv = document.createElement('div');
+        priorityDiv.classList.add('todo-priority');
+        priorityDiv.append(todoList[i].priority);
+
+        createdAtDiv = document.createElement('div');
+        createdAtDiv.classList.add('todo-created-at');
+        createdAtDiv.append(todoList[i].date);
+
+        textDiv = document.createElement('div');
+        textDiv.classList.add('todo-text');
+        textDiv.append(todoList[i].text);
+
+        todoDiv.append(priorityDiv);
+        todoDiv.append(createdAtDiv);
+        todoDiv.append(textDiv);
+        
         viewSection.append(todoDiv);
     }
 }
