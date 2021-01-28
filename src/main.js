@@ -1,5 +1,7 @@
 const addBtn = document.querySelector('#add-button');
 const viewSection = document.querySelector('.view-section');
+const sortBtn = document.querySelector('#sort-button');
+
 const todoList =[];
 
 class toDoTask {
@@ -12,6 +14,7 @@ class toDoTask {
 // ---------------- Event Listeners --------------------- // 
 
 addBtn.addEventListener('click', addToDo);
+sortBtn.addEventListener('click', sortToDo);
 
 // ---------------- Functions --------------------------- //
 
@@ -64,3 +67,9 @@ function addToDo(event){
     inputElem.focus();
 }
 
+
+function sortToDo(){
+    todoList.sort(function(a, b){
+        return a.priority.innerHTML - b.priority.innerHTML;
+    });
+}
