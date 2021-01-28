@@ -72,4 +72,14 @@ function sortToDo(){
     todoList.sort(function(a, b){
         return a.priority.innerHTML - b.priority.innerHTML;
     });
+
+    viewSection.innerHTML = "";
+    for(let i=0; i < todoList.length; i++){
+        const todoDiv = document.createElement('div');
+        todoDiv.classList.add('todo-container');
+        todoDiv.append(todoList[i].priority);
+        todoDiv.append(todoList[i].date);
+        todoDiv.append(todoList[i].text);
+        viewSection.append(todoDiv);
+    }
 }
