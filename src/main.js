@@ -70,7 +70,7 @@ function addToDo(event){
 
 function sortToDo(){
     todoList.sort(function(a, b){
-        return a.priority.innerHTML - b.priority.innerHTML;
+        return b.priority.innerHTML - a.priority.innerHTML;
     });
 
     viewSection.innerHTML = "";
