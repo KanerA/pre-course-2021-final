@@ -3,25 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
     <title>My TO-DO List</title>
     <script src="utils.js"></script>
   </head>
   <body>
-    <h1>To-Do List:</h1>
+    <h1 id="title">To-Do List:</h1>
     <section class="control-section">
       <div id="sort-amount">
         <span id="counter"></span>
         <button id="sort-button">Sort</button>
       </div>
-      <input type="text" id="text-input" placeholder="add To-Do" required>
-      <select name="priority" id="priority-selector">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select>
-      <button id="add-button">Add</button>
+      <div class="input-container">
+        <input type="text" id="text-input" placeholder="add To-Do" required>
+        <select name="priority" id="priority-selector">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+        <button id="add-button">Add</button>
+      </div>
     </section>
     <section class="view-section">
       

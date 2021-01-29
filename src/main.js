@@ -51,6 +51,19 @@ function addToDo(event){
     const todoText = document.createElement('div');
     todoText.classList.add('todo-text');
     todoDiv.appendChild(todoText); 
+
+    const checkButton = document.createElement('button');
+    checkButton.innerHTML = `<i class="fas fa-check"></i>`
+    checkButton.classList.add('checkMark');
+    checkButton.appendChild(checkSign);
+
+    const removeButton = document.createElement('button');
+    removeButton.innerHTML = `<i class="fas fa-trash"></i>`
+    removeButton.classList.add('removeItem');
+    removeButton.appendChild(removeSign);
+
+    todoDiv.append(checkButton);
+    todoDiv.append(removeButton);
     
     viewSection.appendChild(todoDiv);
 
@@ -101,13 +114,26 @@ function createListItem(myArr, index){
         textDiv = document.createElement('div');
         textDiv.classList.add('todo-text');
         textDiv.append(myArr[index].text);
+
+        checkButton = document.createElement('button');
+        checkButton.classList.add('checkMark');
+        checkSign = document.createElement('i');
+        checkSign.classList.add('fas', 'fa-check-square');
+        checkButton.appendChild(checkSign);
+
+        removeButton = document.createElement('button');
+        removeButton.classList.add('removeItem');
+        removeSign = document.createElement('i');
+        removeSign.classList.add('fas', 'fa-trash');
+        removeButton.appendChild(removeSign);
         
         todoDiv.append(priorityDiv);
         todoDiv.append(createdAtDiv);
         todoDiv.append(textDiv);
+        todoDiv.append(checkButton);
+        todoDiv.append(removeButton);
         
         viewSection.append(todoDiv);
-    
 }
 
 async function updateTodoJson(){
