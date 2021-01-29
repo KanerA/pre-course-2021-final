@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded',async () => {
         counter();
     }
 });
+viewSection.addEventListener('click', removeItem);
 
 // ---------------- Functions --------------------------- //
 
@@ -53,14 +54,12 @@ function addToDo(event){
     todoDiv.appendChild(todoText); 
 
     const checkButton = document.createElement('button');
-    checkButton.innerHTML = `<i class="fas fa-check"></i>`
+    checkButton.innerHTML = `<i class="fas fa-check-square"></i>`;
     checkButton.classList.add('checkMark');
-    checkButton.appendChild(checkSign);
 
     const removeButton = document.createElement('button');
-    removeButton.innerHTML = `<i class="fas fa-trash"></i>`
+    removeButton.innerHTML = `<i class="fas fa-trash"></i>`;
     removeButton.classList.add('removeItem');
-    removeButton.appendChild(removeSign);
 
     todoDiv.append(checkButton);
     todoDiv.append(removeButton);
@@ -116,16 +115,13 @@ function createListItem(myArr, index){
         textDiv.append(myArr[index].text);
 
         checkButton = document.createElement('button');
+        checkButton.innerHTML = `<i class="fas fa-check-square"></i>`;
         checkButton.classList.add('checkMark');
-        checkSign = document.createElement('i');
-        checkSign.classList.add('fas', 'fa-check-square');
-        checkButton.appendChild(checkSign);
+        
 
         removeButton = document.createElement('button');
+        removeButton.innerHTML = `<i class="fas fa-trash"></i>`;
         removeButton.classList.add('removeItem');
-        removeSign = document.createElement('i');
-        removeSign.classList.add('fas', 'fa-trash');
-        removeButton.appendChild(removeSign);
         
         todoDiv.append(priorityDiv);
         todoDiv.append(createdAtDiv);
@@ -151,4 +147,12 @@ async function getTodoJson(){
 function counter(){
     let counter = document.querySelector('#counter');
     counter.innerHTML = todoList.length;
+}
+
+function removeItem(event){
+    let temp = event.target;
+    console.log(temp);
+    if(temp.classList[0] === 'removeItem'){
+        event.target.parentElement.remove();
+    }
 }
