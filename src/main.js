@@ -154,10 +154,10 @@ function removeItem(event){
     let temp = event.target;
     if(temp.classList[0] === 'removeItem'){
         const todo = temp.parentElement;
-        let tempText = todo.children[2].innerHTML;
-        console.log(tempText);
+        let itemTime = todo.children[1].innerHTML;
+        console.log(itemTime);
         for(let i = 0; i<todoList.length; i++){
-            if(todoList[i].text === tempText){
+            if(todoList[i].date === itemTime){
 
                 todoList.splice(i, 1);
                 myTodo = {'my-todo': todoList};
