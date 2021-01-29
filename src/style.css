@@ -66,6 +66,10 @@ body {
   padding: 5px;
 }
 
+.fa-check-square , 
+.fa-trash{
+    pointer-events: none;
+}
 .removeItem{
     background: none;
     color: inherit;
@@ -76,10 +80,11 @@ body {
     outline: inherit;
 }
 
-.fa-check-square , 
-.fa-trash{
-    pointer-events: none;
+.completed{
+    text-decoration: line-through;
+    opacity: 0.5;
 }
+
 
 /* select {
   -webkit-appearance: none;

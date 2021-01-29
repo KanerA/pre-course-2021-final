@@ -11,6 +11,7 @@ class toDoTask {
         this.date = date; 
     }
 }
+
 // ---------------- Event Listeners --------------------- // 
 
 addBtn.addEventListener('click', addToDo);
@@ -151,8 +152,22 @@ function counter(){
 
 function removeItem(event){
     let temp = event.target;
-    console.log(temp);
     if(temp.classList[0] === 'removeItem'){
-        event.target.parentElement.remove();
+        const todo = temp.parentElement;
+        let tempText = todo.children[2].innerHTML;
+        console.log(tempText);
+        for(let i = 0; i<todoList.length; i++){
+            if(todoList[i].text === tempText){
+
+                todoList.splice(i, 1);
+                myTodo = {'my-todo': todoList};
+                updateTodoJson();
+                event.target.parentElement.remove();
+                counter();
+            }
+        }
+    }
+    if(temp.classList[0] === 'checkMark'){
+        temp.parentElement.classList.toggle('completed');
     }
 }
