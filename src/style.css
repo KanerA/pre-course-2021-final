@@ -3,17 +3,18 @@ body {
   padding: 0;
   min-height: 100vh;
   box-sizing: border-box;
-  background-image: linear-gradient(180deg, #07f045 0%, #1f3f01 100%);
-  color: white;
+  background-image: linear-gradient(180deg, #D6ED17FF 0%, rgb(202, 156, 29) 100%);
+  color: #D6ED17FF;
 }
 #title {
   text-align: center;
+  color: #606060FF;
 }
 
 .control-section {
   display: flex;
   justify-content: space-evenly;
-  background-color: #0a0;
+  background-color: #606060FF;
   width: 60%;
   margin: 20px 20%;
   padding: 5px;
@@ -28,7 +29,7 @@ body {
   align-items: center;
   width: 60%;
   margin: 20px 20%;
-  background-color: #0a0;
+  background-color: #606060FF;
   border: 3px black solid;
   padding: 5px;
   overflow: hidden;/* change after media query */
@@ -39,19 +40,19 @@ body {
 .todo-text {
   margin: 5px;
   text-align: center;
-  background-color: #0a0;
+  background-color: #606060FF;
   flex: 1;
 }
 .todo-priority {
   margin: 5px;
   text-align: center;
-  background-color: #0a0;
+  background-color: #606060FF;
   flex: 1;
 }
 .todo-created-at {
   margin: 5px;
   text-align: center;
-  background-color: #0a0;
+  background-color: #606060FF;
   flex: 1;
 }
 

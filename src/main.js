@@ -5,10 +5,11 @@ const sortBtn = document.querySelector('#sort-button');
 let todoList =[];
 
 class toDoTask {
-    constructor(priority, text, date){
+    constructor(priority, text, date, completed){
         this.priority = priority;
         this.text = text;
         this.date = date; 
+        this.completed = completed;
     }
 }
 
@@ -24,7 +25,7 @@ document.addEventListener('DOMContentLoaded',async () => {
         counter();
     }
 });
-viewSection.addEventListener('click', removeItem);
+viewSection.addEventListener('click', removeCheckItem);
 
 // ---------------- Functions --------------------------- //
 
@@ -41,7 +42,7 @@ function addToDo(event){
     // ------ create the divs for each To-Do task ------- //
     const todoDiv = document.createElement('div');
     todoDiv.classList.add('todo-container');
-    
+
     const priority = document.createElement('div');
     priority.classList.add('todo-priority');
     todoDiv.appendChild(priority);
@@ -54,14 +55,19 @@ function addToDo(event){
     todoText.classList.add('todo-text');
     todoDiv.appendChild(todoText); 
 
+    // const descriptionButton = document.createElement('button');
+    // descriptionButton.innerHTML = `<i class="fas fa-plus"></i>`;
+    // descriptionButton.classList.add('descriptionBtn');
+    
     const checkButton = document.createElement('button');
     checkButton.innerHTML = `<i class="fas fa-check-square"></i>`;
     checkButton.classList.add('checkMark');
-
+    
     const removeButton = document.createElement('button');
     removeButton.innerHTML = `<i class="fas fa-trash"></i>`;
     removeButton.classList.add('removeItem');
-
+    
+    // // todoDiv.append(descriptionButton);
     todoDiv.append(checkButton);
     todoDiv.append(removeButton);
     
@@ -73,10 +79,10 @@ function addToDo(event){
     let date = new Date();
     let timeSQL = date.toISOString().slice(0,19).replace('T',' ');
     createdAt.innerHTML = timeSQL;
-    
+    let completed = false;
     // ----- create an object for each to-do task ------ //
-    todoList.push(new toDoTask(priority.innerHTML, textInput, timeSQL));
-
+    todoList.push(new toDoTask(priority.innerHTML, textInput, timeSQL, completed));
+    console.log(todoList);
     // ------ adding counter of to-do's ------- //
     counter();
     
@@ -96,41 +102,51 @@ function sortToDo(){
     
     viewSection.innerHTML = "";
     for(let i=0; i < todoList.length; i++){
-        createListItem(todoList,i);
+        createListItem(todoList, i);
     }
 }
 
 function createListItem(myArr, index){
-        const todoDiv = document.createElement('div');
-        todoDiv.classList.add('todo-container');
-        priorityDiv = document.createElement('div');
-        priorityDiv.classList.add('todo-priority');
-        priorityDiv.append(myArr[index].priority);
-        
-        createdAtDiv = document.createElement('div');
-        createdAtDiv.classList.add('todo-created-at');
-        createdAtDiv.append(myArr[index].date);
-        
-        textDiv = document.createElement('div');
-        textDiv.classList.add('todo-text');
-        textDiv.append(myArr[index].text);
+    const todoDiv = document.createElement('div');
+    todoDiv.classList.add('todo-container');
 
-        checkButton = document.createElement('button');
-        checkButton.innerHTML = `<i class="fas fa-check-square"></i>`;
-        checkButton.classList.add('checkMark');
-        
+    let priorityDiv = document.createElement('div');
+    priorityDiv.classList.add('todo-priority');
+    priorityDiv.append(myArr[index].priority);
+    
+    let createdAtDiv = document.createElement('div');
+    createdAtDiv.classList.add('todo-created-at');
+    createdAtDiv.append(myArr[index].date);
+    
+    let textDiv = document.createElement('div');
+    textDiv.classList.add('todo-text');
+    textDiv.append(myArr[index].text);
+    
+    let checkButton = document.createElement('button');
+    checkButton.innerHTML = `<i class="fas fa-check-square"></i>`;
+    checkButton.classList.add('checkMark');
 
-        removeButton = document.createElement('button');
-        removeButton.innerHTML = `<i class="fas fa-trash"></i>`;
-        removeButton.classList.add('removeItem');
-        
-        todoDiv.append(priorityDiv);
-        todoDiv.append(createdAtDiv);
-        todoDiv.append(textDiv);
-        todoDiv.append(checkButton);
-        todoDiv.append(removeButton);
-        
-        viewSection.append(todoDiv);
+    // let descriptionButton = document.createElement('button');
+    // descriptionButton.innerHTML = `<i class="fas fa-plus"></i>`;
+    // descriptionButton.classList.add('descriptionBtn');
+
+    console.log(myArr[index].completed);
+    if(myArr[index].completed){
+        todoDiv.classList.add('completed');
+    }
+
+    let removeButton = document.createElement('button');
+    removeButton.innerHTML = `<i class="fas fa-trash"></i>`;
+    removeButton.classList.add('removeItem');
+    
+    todoDiv.append(priorityDiv);
+    todoDiv.append(createdAtDiv);
+    todoDiv.append(textDiv);
+    // // todoDiv.append(descriptionButton);
+    todoDiv.append(checkButton);
+    todoDiv.append(removeButton);
+    
+    viewSection.append(todoDiv);
 }
 
 async function updateTodoJson(){
@@ -150,12 +166,11 @@ function counter(){
     counter.innerHTML = todoList.length;
 }
 
-function removeItem(event){
+function removeCheckItem(event){
     let temp = event.target;
     if(temp.classList[0] === 'removeItem'){
         const todo = temp.parentElement;
         let itemTime = todo.children[1].innerHTML;
-        console.log(itemTime);
         for(let i = 0; i<todoList.length; i++){
             if(todoList[i].date === itemTime){
 
@@ -168,6 +183,18 @@ function removeItem(event){
         }
     }
     if(temp.classList[0] === 'checkMark'){
+        let bool;
         temp.parentElement.classList.toggle('completed');
+        const todo = temp.parentElement;
+        let itemTime = todo.children[1].innerHTML;
+        for(let i = 0; i < todoList.length; i++){
+            if(todoList[i].date === itemTime){
+                console.log(todoList[i].completed);
+                bool = !todoList[i].completed;
+                todoList[i].completed = bool;
+                myTodo = {'my-todo': todoList};
+                updateTodoJson();
+            }
+        }
     }
 }
