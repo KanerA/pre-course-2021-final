@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded',async () => {
     for(let i = 0; i < myContent.length; i++){
         createListItem(myContent, i);
         todoList = myContent;
+        counter();
     }
 });
 
@@ -49,8 +50,7 @@ function addToDo(event){
     
     const todoText = document.createElement('div');
     todoText.classList.add('todo-text');
-    todoDiv.appendChild(todoText);
-    
+    todoDiv.appendChild(todoText); 
     
     viewSection.appendChild(todoDiv);
 
@@ -65,13 +65,13 @@ function addToDo(event){
     todoList.push(new toDoTask(priority.innerHTML, textInput, timeSQL));
 
     // ------ adding counter of to-do's ------- //
-    let counter = document.querySelector('#counter');
-    counter.innerHTML = todoList.length + " To-Do's";
+    counter();
     
     // ----- clear input field and focus for next input --- //
     inputElem.value = "";
     inputElem.focus();
-
+    
+    // ----- updating the JSONbin.io ----- //
     myTodo = {'my-todo': todoList};
     updateTodoJson();
 }
@@ -120,4 +120,9 @@ async function getTodoJson(){
     let recordResponse = jsonResponse["record"];
     let myList = recordResponse; 
     return myList['my-todo'];      
+}
+
+function counter(){
+    let counter = document.querySelector('#counter');
+    counter.innerHTML = todoList.length;
 }
