@@ -3,6 +3,7 @@ const viewSection = document.querySelector('.view-section');
 const sortBtn = document.querySelector('#sort-button');
 const searchBtn = document.querySelector('#search');
 
+
 let todoList =[];
 
 class toDoTask {
@@ -28,8 +29,11 @@ document.addEventListener('DOMContentLoaded',async () => {
 });
 addBtn.addEventListener('click', addToDo);
 sortBtn.addEventListener('click', sortToDo);
-viewSection.addEventListener('click', removeCheckItem);
+viewSection.addEventListener('click', viewSectionEdit);
 searchBtn.addEventListener('click', findText);
+alertSpan.addEventListener('click', function(){
+    this.parentElement.style.display='none';
+});
 // ---------------- Functions --------------------------- //
 
 function addToDo(event){
@@ -158,50 +162,62 @@ function counter(){
     counter.innerHTML = todoList.length;
 }
 
-function removeCheckItem(event){
+function viewSectionEdit(event){
     let temp = event.target;
     if(temp.classList[0] === 'removeItem'){
-        const todo = temp.parentElement;
-        let itemTime = todo.children[1].innerHTML;
-        for(let i = 0; i<todoList.length; i++){
-            if(todoList[i].date === itemTime){
-
-                todoList.splice(i, 1);
-                myTodo = {'my-todo': todoList};
-                updateTodoJson();
-                event.target.parentElement.remove();
-                counter();
-            }
-        }
+        removeItem(event);
     }
     if(temp.classList[0] === 'checkMark'){
-        temp.parentElement.classList.toggle('completed');
-        const todo = temp.parentElement;
-        let itemTime = todo.children[1].innerHTML;
+        completeTodo(event);
+    }
+    
+}
 
-        for(let i = 0; i < todoList.length; i++){
-            if(todoList[i].date === itemTime){
-                todoList[i].completed = !todoList[i].completed;
-                myTodo = {'my-todo': todoList};
-                updateTodoJson();
-            }
+function removeItem(event){//removes an item from the todo list and the server
+    let temp = event.target;
+    const todo = temp.parentElement;
+    let itemTime = todo.children[1].innerHTML;
+    for(let i = 0; i<todoList.length; i++){
+        if(todoList[i].date === itemTime){
+
+            todoList.splice(i, 1);
+            myTodo = {'my-todo': todoList};
+            updateTodoJson();
+            event.target.parentElement.remove();
+            counter();
         }
-    } 
+    }
+}
+
+function completeTodo(event){//toggles between completed & uncompleted, persist through reloads
+    let temp = event.target;
+    temp.parentElement.classList.toggle('completed');
+    const todo = temp.parentElement;
+    let itemTime = todo.children[1].innerHTML;
+
+    for(let i = 0; i < todoList.length; i++){
+        if(todoList[i].date === itemTime){
+            todoList[i].completed = !todoList[i].completed;
+            myTodo = {'my-todo': todoList};
+            updateTodoJson();
+        }
+    }
+    
 }
 
 function findText(){
     let tempText = document.getElementById('search-for');
     const search = tempText.value;
     for(let i = 0; i < todoList.length; i++){
+        counter++;
         if(todoList[i].text === search){
             let temp = todoList[i];
-            todoList.splice(i, 1)
+            todoList.splice(i, 1);
             todoList.unshift(temp);
             viewSection.innerHTML = "";
             for(let j=0; j<todoList.length; j++){
-                
                 createListItem(todoList, j);
             }
-        }
+        } 
     }
 }
