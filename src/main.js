@@ -52,6 +52,11 @@ function addToDo(event){
     const todoDiv = document.createElement('div');
     todoDiv.classList.add('todo-container');
 
+    const descriptionButton = document.createElement('button');
+    descriptionButton.innerHTML = `<i class="fas fa-plus"></i>`;
+    descriptionButton.classList.add('descriptionBtn');
+    todoDiv.append(descriptionButton);
+    
     const priority = document.createElement('div');
     priority.classList.add('todo-priority');
     todoDiv.appendChild(priority);
@@ -63,11 +68,11 @@ function addToDo(event){
     const todoText = document.createElement('div');
     todoText.classList.add('todo-text');
     todoDiv.appendChild(todoText); 
-
+    
     const checkButton = document.createElement('button');
     checkButton.innerHTML = `<i class="fas fa-check-square"></i>`;
     checkButton.classList.add('checkMark');
-    
+
     const removeButton = document.createElement('button');
     removeButton.innerHTML = `<i class="fas fa-trash"></i>`;
     removeButton.classList.add('removeItem');
@@ -112,6 +117,11 @@ function sortToDo(){
 function createListItem(myArr, index){
     const todoDiv = document.createElement('div');
     todoDiv.classList.add('todo-container');
+
+    const descriptionButton = document.createElement('button');
+    descriptionButton.innerHTML = `<i class="fas fa-plus"></i>`;
+    descriptionButton.classList.add('descriptionBtn');
+    todoDiv.append(descriptionButton);
 
     let priorityDiv = document.createElement('div');
     priorityDiv.classList.add('todo-priority');
@@ -169,19 +179,22 @@ function viewSectionEdit(event){
     if(temp.classList[0] === 'removeItem'){
         removeItem(event);
     }
-    if(temp.classList[0] === 'checkMark'){
+    else if(temp.classList[0] === 'checkMark'){
         completeTodo(event);
     }
+    else if(temp.classList[0] === 'descriptionBtn'){
+        addDescription(event);
+    }
+
     
 }
 
 function removeItem(event){//removes an item from the todo list and the server
     let temp = event.target;
     const todo = temp.parentElement;
-    let itemTime = todo.children[1].innerHTML;
-    for(let i = 0; i<todoList.length; i++){
+    let itemTime = todo.children[2].innerHTML;
+    for(let i = 0; i < todoList.length; i++){
         if(todoList[i].date === itemTime){
-
             todoList.splice(i, 1);
             myTodo = {'my-todo': todoList};
             updateTodoJson();
