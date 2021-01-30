@@ -2,6 +2,8 @@ const addBtn = document.querySelector('#add-button');
 const viewSection = document.querySelector('.view-section');
 const sortBtn = document.querySelector('#sort-button');
 const searchBtn = document.querySelector('#search');
+const alertSpan = document.createElement('span'); 
+const pageHead = document.querySelector('header');
 
 
 let todoList =[];
@@ -208,8 +210,10 @@ function completeTodo(event){//toggles between completed & uncompleted, persist 
 function findText(){
     let tempText = document.getElementById('search-for');
     const search = tempText.value;
+    let counter = 0;
     for(let i = 0; i < todoList.length; i++){
         counter++;
+        
         if(todoList[i].text === search){
             let temp = todoList[i];
             todoList.splice(i, 1);
@@ -218,6 +222,20 @@ function findText(){
             for(let j=0; j<todoList.length; j++){
                 createListItem(todoList, j);
             }
-        } 
+            break;
+        }
+        else if(counter === todoList.length)//alert for search not found
+        {
+            const alertDiv = document.createElement('div');
+            alertDiv.classList.add('alert');
+            alertSpan.classList.add('closeBtn');
+            alertSpan.innerText = 'X';
+            alertDiv.innerText = 'To-do wasn\'t found.';
+            alertDiv.appendChild(alertSpan);
+            pageHead.appendChild(alertDiv);
+        }   
     }
+    counter = 0; 
 }
+
+
