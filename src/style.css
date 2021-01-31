@@ -6,11 +6,13 @@
     #d6ed17ff 0%,
     rgb(202, 156, 29) 100%
   );
+  --high-priority: red;
 }
 html[data-theme="dark"] {
   --global-main-color: #606060;
   --global-secondary-color: #d6ed17;
   --body-light-background: linear-gradient(45deg, #606060 0%, #000 100%);
+  --high-priority: rgb(255, 64, 64);
 }
 body {
   margin: 0;
@@ -76,6 +78,14 @@ main {
   margin: 5px;
   text-align: center;
   background-color: var(--global-secondary-color);
+  width: 20px;
+  border-radius: 25%;
+}
+.high-priority {
+  background-color: var(--high-priority);
+  animation-name: high-priority-flashing;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
 }
 .todo-created-at {
   margin: 5px;
@@ -193,6 +203,17 @@ a:hover {
   padding-left: 5px;
 }
 
+@keyframes high-priority-flashing {
+  0% {
+    background-color: inherit;
+  }
+  50% {
+    background-color: var(--high-priority);
+  }
+  100% {
+    background-color: inherit;
+  }
+}
 /*select {
   /* -webkit-appearance: none; */
 /* -moz-appearance: none; */

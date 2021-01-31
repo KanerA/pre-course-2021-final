@@ -92,6 +92,10 @@ function addToDo(event){
     let timeSQL = date.toISOString().slice(0,19).replace('T',' ');
     createdAt.innerText = timeSQL;
     let completed = false;
+    // ----- creating high-priority class ------ //
+    if(priority.innerText === '5'){
+        priority.classList.add('high-priority');
+    }
     // ----- create an object for each to-do task ------ //
     todoList.push(new toDoTask(priority.innerHTML, textInput, timeSQL, completed));
     // ------ adding counter of to-do's ------- //
@@ -129,6 +133,10 @@ function createListItem(myArr, index){
     const priorityDiv = document.createElement('div');
     priorityDiv.classList.add('todo-priority');
     priorityDiv.append(myArr[index].priority);
+    
+    if(myArr[index].priority === '5'){
+        priorityDiv.classList.add('high-priority');
+    }
     
     const createdAtDiv = document.createElement('div');
     createdAtDiv.classList.add('todo-created-at');
