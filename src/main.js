@@ -4,6 +4,7 @@ const sortBtn = document.querySelector('#sort-button');
 const searchBtn = document.querySelector('#search');
 const alertSpan = document.createElement('span'); 
 const pageHead = document.querySelector('header');
+const shiftMode = document.querySelector('.shiftMode');
 
 
 let todoList =[];
@@ -36,6 +37,7 @@ searchBtn.addEventListener('click', findText);
 alertSpan.addEventListener('click', function(){
     this.parentElement.style.display='none';
 });
+shiftMode.addEventListener('click', darkMode);
 // ---------------- Functions --------------------------- //
 
 function addToDo(event){
@@ -185,8 +187,6 @@ function viewSectionEdit(event){
     else if(temp.classList[0] === 'descriptionBtn'){
         addDescription(event);
     }
-
-    
 }
 
 function removeItem(event){//removes an item from the todo list and the server
@@ -208,8 +208,8 @@ function completeTodo(event){//toggles between completed & uncompleted, persist 
     let temp = event.target;
     temp.parentElement.classList.toggle('completed');
     const todo = temp.parentElement;
-    let itemTime = todo.children[1].innerHTML;
-
+    let itemTime = todo.children[2].innerHTML;
+    
     for(let i = 0; i < todoList.length; i++){
         if(todoList[i].date === itemTime){
             todoList[i].completed = !todoList[i].completed;
@@ -223,6 +223,7 @@ function completeTodo(event){//toggles between completed & uncompleted, persist 
 function findText(){
     let tempText = document.getElementById('search-for');
     const search = tempText.value;
+  
     let counter = 0;
     for(let i = 0; i < todoList.length; i++){
         counter++;
@@ -249,6 +250,19 @@ function findText(){
         }   
     }
     counter = 0; 
+}
+
+function darkMode(){
+    // let body = document.body;
+    // body.classList.toggle('darkMode');
+    const htmlTag = document.getElementsByTagName("html")[0]
+    if (htmlTag.hasAttribute("data-theme")) {
+        htmlTag.removeAttribute("data-theme")
+        return;
+    }
+
+    htmlTag.setAttribute("data-theme", "dark")
+
 }
 
 
