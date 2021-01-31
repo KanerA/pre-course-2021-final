@@ -53,6 +53,18 @@ main {
 #priority-selector {
   height: 45px;
 }
+#add-button {
+  height: 1.5rem;
+  background: none;
+  color: var(--global-secondary-color);
+  background-color: var(--global-main-color);
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  padding: 0 5px;
+  margin: 0;
+}
 
 .todo-container {
   display: flex;
@@ -123,6 +135,16 @@ main {
   font: inherit;
   cursor: pointer;
   outline: inherit;
+}
+.checkMark:hover {
+  background-color: var(--global-main-color);
+  color: var(--global-secondary-color);
+  border-radius: 10%;
+}
+.removeItem:hover {
+  background-color: var(--global-main-color);
+  color: var(--global-secondary-color);
+  border-radius: 10%;
 }
 
 .fa-check-square,
@@ -214,21 +236,3 @@ a:hover {
     background-color: inherit;
   }
 }
-/*select {
-  /* -webkit-appearance: none; */
-/* -moz-appearance: none; */
-/* -ms-appearance: none; */
-/* appearance: none; */
-/* outline: 0; */
-/* box-shadow: none; */
-/* border: 0 !important; */
-/* background-image: none; */
-/* } */
-
-/* #priority-selector { */
-/* cursor: pointer; */
-/*height: 1.5rem;
-  width: 1.5rem;
-}
-
-*/
