@@ -165,8 +165,7 @@ async function updateTodoJson(){
 async function getTodoJson(){
     let response = await fetch('https://api.jsonbin.io/v3/b/6012eb097bfaff74c39959f7/latest');
     let jsonResponse = await response.json(); 
-    let recordResponse = jsonResponse["record"];
-    let myList = recordResponse; 
+    let myList = jsonResponse["record"];
     return myList['my-todo'];      
 }
 
@@ -178,8 +177,8 @@ async function pageInitialize(){
     for(let i = 0; i < myContent.length; i++){
         createListItem(myContent, i);
         todoList = myContent;
-        counter();
     }
+    counter();
 }
 
 function counter(){
@@ -197,6 +196,9 @@ function viewSectionEdit(event){
     }
     else if(temp.classList[0] === 'editItem'){
         editItemBox(event);
+    }
+    else if(temp.classList[0] === 'use-edit'){
+        useEdit(event);
     }
 }
 
@@ -228,18 +230,36 @@ function completeTodo(event){//toggles between completed & uncompleted, persist 
             updateTodoJson();
         }
     }
-    
 }
 
 function editItemBox(event){
+    event.preventDefault();
     editDiv = document.createElement('div');
     editInput = document.createElement('input');
     editInput.classList.add('description-input');
     editDiv.append(editInput);
     saveEdit = document.createElement('button');
+    saveEdit.classList.add('use-edit');
     saveEdit.innerText = 'Edit';
     editDiv.append(saveEdit);
-    event.target.parentElement.append(editDiv);
+    event.target.append(editDiv);
+}
+
+function useEdit(event){
+    event.preventDefault();
+    const editInput = event.target.parentElement.children[0];
+    const editValue = editInput.value;
+    let temp = editInput.parentElement.parentElement.parentElement.children[3].innerText;
+    editInput.parentElement.parentElement.parentElement.children[3].innerText = editValue;
+    for(let i=0; i < todoList.length; i++){
+        if(todoList[i].text === temp){
+            todoList[i].text = editValue;
+            myTodo = {'my-todo': todoList};
+            updateTodoJson();
+            break;
+        }
+    }
+    editInput.parentElement.remove();
 }
 
 function findText(){
@@ -250,7 +270,7 @@ function findText(){
     for(let i = 0; i < todoList.length; i++){
         counter++;
         
-        if(todoList[i].text === search){
+        if(todoList[i].text.includes(search)){
             let temp = todoList[i];
             todoList.splice(i, 1);
             todoList.unshift(temp);
