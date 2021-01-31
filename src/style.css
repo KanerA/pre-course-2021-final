@@ -6,18 +6,15 @@
     #d6ed17ff 0%,
     rgb(202, 156, 29) 100%
   );
-  /* --center: center; */
 }
 html[data-theme="dark"] {
   --global-main-color: #606060;
   --global-secondary-color: #d6ed17;
   --body-light-background: linear-gradient(45deg, #606060 0%, #000 100%);
 }
-
 body {
   margin: 0;
   padding: 0;
-  /* min-height: 100vh; */
   box-sizing: border-box;
   background-image: var(--body-light-background);
   color: var(--global-main-color);
@@ -56,7 +53,7 @@ main {
 }
 
 .todo-container {
-  /* display: flex; */
+  display: flex;
   justify-content: center;
   align-items: center;
   width: 60%;
@@ -79,7 +76,6 @@ main {
   margin: 5px;
   text-align: center;
   background-color: var(--global-secondary-color);
-  flex: 1;
 }
 .todo-created-at {
   margin: 5px;
@@ -108,25 +104,21 @@ main {
   outline: inherit;
   padding: 5px;
 }
-.checkMark:hover {
-  background-color: var(--global-main-color);
-  color: #606060;
-  border-radius: 10%;
+
+.removeItem {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 5px;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
 }
 
 .fa-check-square,
 .fa-trash,
 .fa-plus {
   pointer-events: none;
-}
-.removeItem {
-  background: none;
-  color: inherit;
-  border: none;
-  padding: 0;
-  font: inherit;
-  cursor: pointer;
-  outline: inherit;
 }
 
 .completed {
@@ -177,36 +169,6 @@ a:hover {
   color: black;
 }
 
-/* .darkMode {
-  background-image: linear-gradient(180deg, #606060 0%, #000 100%);
-  color: black;
-} */
-
-/* Arrow
- #priority-selector::after {
-  content: "\25BC";
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 0.5rem;
-  background: #000;
-  cursor: pointer;
-  pointer-events: none;
-} */
-/*
-.control-section {
-  display: flex;
-  justify-content: space-between;
-  background-color: var(--global-secondary-color);
-  width: 60%;
-  margin: 20px 20%;
-  padding: 5px;
-  border: 3px black solid;
-}
-.sort-amount {
-  display: block;
-  margin-left: 20px;
-}
 #sort-button {
   background: none;
   color: var(--global-secondary-color);
@@ -219,6 +181,7 @@ a:hover {
   padding: 5px;
   margin: 0 10px;
 }
+
 #input-container {
   display: flex;
   align-items: center;
@@ -227,8 +190,10 @@ a:hover {
   height: 1.5rem;
   margin: 0;
   padding: 0;
+  padding-left: 5px;
 }
-select {
+
+/*select {
   /* -webkit-appearance: none; */
 /* -moz-appearance: none; */
 /* -ms-appearance: none; */
@@ -244,16 +209,5 @@ select {
 /*height: 1.5rem;
   width: 1.5rem;
 }
-#add-button {
-  height: 1.5rem;
-  background: none;
-  color: var(--global-secondary-color);
-  background-color: var(--global-main-color);
-  border: none;
-  font: inherit;
-  cursor: pointer;
-  outline: inherit;
-  padding: 0;
-  margin: 0;
-}
+
 */

@@ -21,6 +21,7 @@ class toDoTask {
 // ---------------- Event Listeners --------------------- // 
 
 document.addEventListener('DOMContentLoaded',async () => {
+    applyInitialTheme();
     let inputElem = document.getElementById('text-input');
     inputElem.focus();
     let myContent = await getTodoJson();
@@ -62,7 +63,7 @@ function addToDo(event){
     const priority = document.createElement('div');
     priority.classList.add('todo-priority');
     todoDiv.appendChild(priority);
-    
+   
     const createdAt = document.createElement('div');
     createdAt.classList.add('todo-created-at');
     todoDiv.appendChild(createdAt);
@@ -85,11 +86,11 @@ function addToDo(event){
     viewSection.appendChild(todoDiv);
 
     // ----- adding data to each of the divs ----- //
-    todoText.innerHTML = textInput;
-    priority.innerHTML = document.getElementById('priority-selector').value;
+    todoText.innerText = textInput;
+    priority.innerText = document.getElementById('priority-selector').value;
     let date = new Date();
     let timeSQL = date.toISOString().slice(0,19).replace('T',' ');
-    createdAt.innerHTML = timeSQL;
+    createdAt.innerText = timeSQL;
     let completed = false;
     // ----- create an object for each to-do task ------ //
     todoList.push(new toDoTask(priority.innerHTML, textInput, timeSQL, completed));
@@ -125,19 +126,19 @@ function createListItem(myArr, index){
     descriptionButton.classList.add('descriptionBtn');
     todoDiv.append(descriptionButton);
 
-    let priorityDiv = document.createElement('div');
+    const priorityDiv = document.createElement('div');
     priorityDiv.classList.add('todo-priority');
     priorityDiv.append(myArr[index].priority);
     
-    let createdAtDiv = document.createElement('div');
+    const createdAtDiv = document.createElement('div');
     createdAtDiv.classList.add('todo-created-at');
     createdAtDiv.append(myArr[index].date);
     
-    let textDiv = document.createElement('div');
+    const textDiv = document.createElement('div');
     textDiv.classList.add('todo-text');
     textDiv.append(myArr[index].text);
     
-    let checkButton = document.createElement('button');
+    const checkButton = document.createElement('button');
     checkButton.innerHTML = `<i class="fas fa-check-square"></i>`;
     checkButton.classList.add('checkMark');
 
@@ -145,7 +146,7 @@ function createListItem(myArr, index){
         todoDiv.classList.add('completed');
     }
 
-    let removeButton = document.createElement('button');
+    const removeButton = document.createElement('button');
     removeButton.innerHTML = `<i class="fas fa-trash"></i>`;
     removeButton.classList.add('removeItem');
     
@@ -253,16 +254,21 @@ function findText(){
 }
 
 function darkMode(){
-    // let body = document.body;
-    // body.classList.toggle('darkMode');
     const htmlTag = document.getElementsByTagName("html")[0]
-    if (htmlTag.hasAttribute("data-theme")) {
-        htmlTag.removeAttribute("data-theme")
-        return;
+    if (htmlTag.hasAttribute('data-theme')) {
+        htmlTag.removeAttribute('data-theme')
+        return window.localStorage.removeItem('site-theme');
     }
+    htmlTag.setAttribute("data-theme", "dark");
+    window.localStorage.setItem('site-theme', 'dark');
+}
 
-    htmlTag.setAttribute("data-theme", "dark")
-
+function applyInitialTheme () {
+    const theme = window.localStorage.getItem('site-theme');
+    if (theme !== null) {
+        const htmlTag = document.getElementsByTagName('html')[0];
+        htmlTag.setAttribute('data-theme', theme);
+    }
 }
 
 
