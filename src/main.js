@@ -45,10 +45,10 @@ function addToDo(event){
     const todoDiv = document.createElement('div');
     todoDiv.classList.add('todo-container');
 
-    const descriptionButton = document.createElement('button');
-    descriptionButton.innerHTML = `<i class="fas fa-plus"></i>`;
-    descriptionButton.classList.add('descriptionBtn');
-    todoDiv.append(descriptionButton);
+    const editClick = document.createElement('button')
+    editClick.classList.add('editItem');
+    editClick.innerHTML = `<i class="fas fa-edit"></i>`
+    todoDiv.append(editClick);
     
     const priority = document.createElement('div');
     priority.classList.add('todo-priority');
@@ -115,10 +115,10 @@ function createListItem(myArr, index){
     const todoDiv = document.createElement('div');
     todoDiv.classList.add('todo-container');
 
-    const descriptionButton = document.createElement('button');
-    descriptionButton.innerHTML = `<i class="fas fa-plus"></i>`;
-    descriptionButton.classList.add('descriptionBtn');
-    todoDiv.append(descriptionButton);
+    const editClick = document.createElement('button')
+    editClick.classList.add('editItem');
+    editClick.innerHTML = `<i class="fas fa-edit"></i>`
+    todoDiv.append(editClick);
 
     const priorityDiv = document.createElement('div');
     priorityDiv.classList.add('todo-priority');
@@ -195,8 +195,8 @@ function viewSectionEdit(event){
     else if(temp.classList[0] === 'checkMark'){
         completeTodo(event);
     }
-    else if(temp.classList[0] === 'descriptionBtn'){
-        addDescription(event);
+    else if(temp.classList[0] === 'editItem'){
+        editItemBox(event);
     }
 }
 
@@ -229,6 +229,17 @@ function completeTodo(event){//toggles between completed & uncompleted, persist 
         }
     }
     
+}
+
+function editItemBox(event){
+    editDiv = document.createElement('div');
+    editInput = document.createElement('input');
+    editInput.classList.add('description-input');
+    editDiv.append(editInput);
+    saveEdit = document.createElement('button');
+    saveEdit.innerText = 'Edit';
+    editDiv.append(saveEdit);
+    event.target.parentElement.append(editDiv);
 }
 
 function findText(){
