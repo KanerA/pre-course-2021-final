@@ -20,17 +20,7 @@ class toDoTask {
 
 // ---------------- Event Listeners --------------------- // 
 
-document.addEventListener('DOMContentLoaded',async () => {
-    applyInitialTheme();
-    let inputElem = document.getElementById('text-input');
-    inputElem.focus();
-    let myContent = await getTodoJson();
-    for(let i = 0; i < myContent.length; i++){
-        createListItem(myContent, i);
-        todoList = myContent;
-        counter();
-    }
-});
+document.addEventListener('DOMContentLoaded',pageInitialize);
 addBtn.addEventListener('click', addToDo);
 sortBtn.addEventListener('click', sortToDo);
 viewSection.addEventListener('click', viewSectionEdit);
@@ -133,7 +123,7 @@ function createListItem(myArr, index){
     const priorityDiv = document.createElement('div');
     priorityDiv.classList.add('todo-priority');
     priorityDiv.append(myArr[index].priority);
-    
+
     if(myArr[index].priority === '5'){
         priorityDiv.classList.add('high-priority');
     }
@@ -178,6 +168,18 @@ async function getTodoJson(){
     let recordResponse = jsonResponse["record"];
     let myList = recordResponse; 
     return myList['my-todo'];      
+}
+
+async function pageInitialize(){
+    applyInitialTheme();
+    let inputElem = document.getElementById('text-input');
+    inputElem.focus();
+    let myContent = await getTodoJson();
+    for(let i = 0; i < myContent.length; i++){
+        createListItem(myContent, i);
+        todoList = myContent;
+        counter();
+    }
 }
 
 function counter(){
