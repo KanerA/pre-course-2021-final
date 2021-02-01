@@ -35,6 +35,27 @@ main {
   position: absolute;
   top: 30px;
   right: 10px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+#search-for {
+  height: 1.5rem;
+  padding-left: 5px;
+  padding: 0 5px;
+  margin: 0;
+}
+#search-button {
+  height: 1.7rem;
+  background: none;
+  color: var(--global-secondary-color);
+  background-color: var(--global-main-color);
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  padding: 0 5px;
+  margin: 0;
 }
 .control-section {
   display: flex;
@@ -208,6 +229,27 @@ a:hover {
   margin: 0;
   padding: 0;
   padding-left: 5px;
+}
+.editDiv {
+  display: flex;
+}
+.edit-input {
+  margin: 0;
+  padding: 0, 5px;
+  height: 1.5rem;
+}
+.use-edit {
+  background: none;
+  color: var(--global-secondary-color);
+  background-color: var(--global-main-color);
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  padding: 5px;
+  margin: 0 10px;
 }
 #spinner {
   visibility: hidden;
