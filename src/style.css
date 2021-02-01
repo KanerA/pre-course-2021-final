@@ -11,7 +11,11 @@
 html[data-theme="dark"] {
   --global-main-color: #606060;
   --global-secondary-color: #d6ed17;
-  --body-light-background: linear-gradient(45deg, #606060 0%, #000 100%);
+  --body-light-background: linear-gradient(
+    45deg,
+    #606060 0%,
+    rgb(12, 11, 11) 100%
+  );
   --high-priority: rgb(163, 28, 51);
 }
 body {
@@ -20,9 +24,27 @@ body {
   box-sizing: border-box;
   background-image: var(--body-light-background);
   color: var(--global-main-color);
+  transition: all 0.5s;
 }
 header {
   padding: 5px;
+  margin: 0;
+}
+#mode-button {
+  background: none;
+  background-color: var(--global-secondary-color);
+  color: var(--global-main-color);
+  border: none;
+  border-radius: 15%;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  padding: 5px;
+  margin: 0 10px;
+}
+#mode-button:hover {
+  color: var(--global-secondary-color);
+  background-color: var(--global-main-color);
 }
 main {
   min-height: 90vh;
@@ -41,7 +63,6 @@ main {
 }
 #search-for {
   height: 1.5rem;
-  padding-left: 5px;
   padding: 0 5px;
   margin: 0;
 }
@@ -57,6 +78,10 @@ main {
   padding: 0 5px;
   margin: 0;
 }
+#search-button:hover {
+  color: var(--global-main-color);
+  background-color: var(--global-secondary-color);
+}
 .control-section {
   display: flex;
   justify-content: space-evenly;
@@ -64,6 +89,8 @@ main {
   flex-wrap: wrap;
   width: 65%;
   margin: 0 17.5%;
+  padding: 5px;
+  border: 2.5px var(--global-secondary-color solid);
   background-color: var(--global-secondary-color);
   overflow: hidden;
 }
@@ -87,6 +114,11 @@ main {
   outline: inherit;
   padding: 0 5px;
   margin: 0;
+}
+#add-button:hover {
+  color: var(--global-main-color);
+  /* background-color: #363636; */
+  background-color: var(--global-secondary-color);
 }
 .view-section {
   margin: 0;
@@ -130,16 +162,6 @@ main {
   background-color: var(--global-secondary-color);
   flex: 1;
 }
-.descriptionBtn {
-  background: none;
-  color: inherit;
-  border: none;
-  padding: 0;
-  font: inherit;
-  cursor: pointer;
-  outline: inherit;
-  padding: 5px;
-}
 .checkMark,
 .removeItem,
 .editItem {
@@ -176,7 +198,7 @@ a.social-links {
   font-size: 30px;
   width: auto;
   margin: 20px;
-  transition: all 0.3s;
+  transition: all 0.5s;
 }
 a:hover {
   color: black;
@@ -190,7 +212,7 @@ a:hover {
   margin: 0 10%;
   transition: all 0.3s;
 }
-/* The close button */
+/* The alert close button */
 .closeBtn {
   margin-left: 15px;
   color: white;
@@ -213,12 +235,15 @@ a:hover {
   color: var(--global-secondary-color);
   background-color: var(--global-main-color);
   border: none;
-  padding: 0;
   font: inherit;
   cursor: pointer;
   outline: inherit;
   padding: 5px;
   margin: 0 10px;
+}
+#sort-button:hover {
+  color: var(--global-main-color);
+  background-color: var(--global-secondary-color);
 }
 #input-container {
   display: flex;
@@ -243,13 +268,16 @@ a:hover {
   color: var(--global-secondary-color);
   background-color: var(--global-main-color);
   border: none;
-  padding: 0;
   margin: 0;
   font: inherit;
   cursor: pointer;
   outline: inherit;
   padding: 5px;
   margin: 0 10px;
+}
+.use-edit:hover {
+  color: var(--global-main-color);
+  background-color: var(--global-secondary-color);
 }
 #spinner {
   visibility: hidden;
@@ -301,5 +329,79 @@ a:hover {
   }
   100% {
     background-color: inherit;
+  }
+}
+
+@media only screen and (max-width: 760px) {
+  body {
+    font-size: 14px;
+    transition: all 0.5s;
+  }
+  #text-input {
+    margin: 0;
+    padding-left: 3px;
+    height: 1rem;
+    width: 5rem;
+  }
+  #priority-selector {
+    height: 1rem;
+  }
+  a.social-links {
+    color: var(--global-secondary-color);
+    font-size: 20px;
+    width: auto;
+    margin: 10px;
+    transition: all 0.3s;
+  }
+  .todo-priority {
+    margin: 5px;
+    text-align: center;
+    background-color: var(--global-secondary-color);
+    width: 15px;
+    border-radius: 25%;
+  }
+  .searchFor {
+    position: absolute;
+    top: 30px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  #search-for {
+    height: 1rem;
+    padding: 0 5px;
+    margin: 0;
+    width: 5rem;
+  }
+  #search-button {
+    height: 1.2rem;
+    background: none;
+    color: var(--global-secondary-color);
+    background-color: var(--global-main-color);
+    border: none;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    padding: 0 5px;
+    margin: 0;
+  }
+  .edit-input {
+    margin: 0;
+    padding: 0, 5px;
+    height: 1rem;
+    width: 5rem;
+  }
+  .use-edit {
+    background: none;
+    color: var(--global-secondary-color);
+    background-color: var(--global-main-color);
+    border: none;
+    margin: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    padding: 5px;
+    margin: 0 10px;
   }
 }
