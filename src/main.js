@@ -5,9 +5,8 @@ const sortBtn = document.querySelector('#sort-button');
 const searchBtn = document.querySelector('#search-button');
 const alertSpan = document.createElement('span'); 
 const pageHead = document.querySelector('header');
-const shiftMode = document.querySelector('.shiftMode');
+const shiftMode = document.getElementById('mode-button');
 const spinner = document.getElementById("spinner");
-
 
 let todoList =[];
 
@@ -198,6 +197,12 @@ function applyInitialTheme () {
     if (theme !== null) {
         const htmlTag = document.getElementsByTagName('html')[0];
         htmlTag.setAttribute('data-theme', theme);
+        if(theme === 'dark'){
+            shiftMode.innerText = 'Dark';
+        }
+        else{
+            shiftMode.innerText = 'Light';
+        }
     }
 }
 
@@ -243,14 +248,15 @@ function completeTodo(event){//toggles between completed & uncompleted, persist 
     temp.parentElement.classList.toggle('completed');
     const todo = temp.parentElement;
     let itemTime = todo.children[2].innerHTML;
-    
     for(let i = 0; i < todoList.length; i++){
         if(todoList[i].date === itemTime){
             todoList[i].completed = !todoList[i].completed;
             myTodo = {'my-todo': todoList};
             updateTodoJson();
-            createListItem(todoList, i);
-            event.target.parentElement.remove();
+            if(todoList[i].completed){
+                createListItem(todoList, i);
+                event.target.parentElement.remove();
+            }
         }
     }
 }
@@ -320,14 +326,16 @@ function findText(){
 }
 
 function darkMode(){
-    console.log("shalom");
     const htmlTag = document.getElementsByTagName("html")[0]
     if (htmlTag.hasAttribute('data-theme')) {
         htmlTag.removeAttribute('data-theme');
+        shiftMode.innerText = 'Light';
         return window.localStorage.removeItem('site-theme');
     }
     htmlTag.setAttribute("data-theme", "dark");
     window.localStorage.setItem('site-theme', 'dark');
+    shiftMode.innerText = 'Dark';
+    
 }
 
 function showSpinner() {
