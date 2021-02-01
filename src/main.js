@@ -2,10 +2,11 @@ const addBtn = document.querySelector('#add-button');
 const inputElem = document.getElementById('text-input');
 const viewSection = document.querySelector('.view-section');
 const sortBtn = document.querySelector('#sort-button');
-const searchBtn = document.querySelector('#search');
+const searchBtn = document.querySelector('#search-button');
 const alertSpan = document.createElement('span'); 
 const pageHead = document.querySelector('header');
 const shiftMode = document.querySelector('.shiftMode');
+const spinner = document.getElementById("spinner");
 
 
 let todoList =[];
@@ -47,39 +48,39 @@ function addToDo(event){
     const todoDiv = document.createElement('div');
     todoDiv.classList.add('todo-container');
 
-    const editClick = document.createElement('button')
+    const editClick = document.createElement('button');
     editClick.classList.add('editItem');
     editClick.innerHTML = `<i class="fas fa-edit"></i>`;
     const editDiv = document.createElement('div');
     editDiv.classList.add('editDiv');
-    editDiv.append(editClick);
-    todoDiv.append(editDiv);
     
     const priority = document.createElement('div');
     priority.classList.add('todo-priority');
-    todoDiv.appendChild(priority);
-   
+    
     const createdAt = document.createElement('div');
     createdAt.classList.add('todo-created-at');
-    todoDiv.appendChild(createdAt);
     
     const todoText = document.createElement('div');
     todoText.classList.add('todo-text');
-    todoDiv.appendChild(todoText); 
     
     const checkButton = document.createElement('button');
     checkButton.innerHTML = `<i class="fas fa-check-square"></i>`;
     checkButton.classList.add('checkMark');
-
+    
     const removeButton = document.createElement('button');
     removeButton.innerHTML = `<i class="fas fa-trash"></i>`;
     removeButton.classList.add('removeItem');
     
+    editDiv.append(editClick);
+    todoDiv.append(editDiv);
+    todoDiv.appendChild(priority);
+    todoDiv.appendChild(createdAt);
+    todoDiv.appendChild(todoText); 
     todoDiv.append(checkButton);
     todoDiv.append(removeButton);
-    
-    viewSection.appendChild(todoDiv);
 
+    viewSection.appendChild(todoDiv);
+    
     // ----- adding data to each of the divs ----- //
     todoText.innerText = textInput;
     priority.innerText = document.getElementById('priority-selector').value;
@@ -93,6 +94,8 @@ function addToDo(event){
     }
     // ----- create an object for each to-do task ------ //
     todoList.push(new toDoTask(priority.innerHTML, textInput, timeSQL, completed));
+
+
     // ------ adding counter of to-do's ------- //
     counter();
     
@@ -104,7 +107,7 @@ function addToDo(event){
     myTodo = {'my-todo': todoList};
     updateTodoJson();
 }
-
+// -------- sorting function ---------- //
 function sortToDo(){
     todoList.sort(function(a, b){
         return b.priority - a.priority;
@@ -119,21 +122,18 @@ function sortToDo(){
 function createListItem(myArr, index){
     const todoDiv = document.createElement('div');
     todoDiv.classList.add('todo-container');
-
     const editClick = document.createElement('button')
     editClick.classList.add('editItem');
     editClick.innerHTML = `<i class="fas fa-edit"></i>`;
     const editDiv = document.createElement('div');
     editDiv.classList.add('editDiv');
-    editDiv.append(editClick);
-    todoDiv.append(editDiv);
-
-    const priorityDiv = document.createElement('div');
-    priorityDiv.classList.add('todo-priority');
-    priorityDiv.append(myArr[index].priority);
-
+    
+    const priority = document.createElement('div');
+    priority.classList.add('todo-priority');
+    priority.append(myArr[index].priority);
+    
     if(myArr[index].priority === '5'){
-        priorityDiv.classList.add('high-priority');
+        priority.classList.add('high-priority');
     }
     
     const createdAtDiv = document.createElement('div');
@@ -147,18 +147,20 @@ function createListItem(myArr, index){
     const checkButton = document.createElement('button');
     checkButton.innerHTML = `<i class="fas fa-check-square"></i>`;
     checkButton.classList.add('checkMark');
-
+    
     if(myArr[index].completed){
         todoDiv.classList.add('completed');
     }
-
+    
     const removeButton = document.createElement('button');
     removeButton.innerHTML = `<i class="fas fa-trash"></i>`;
     removeButton.classList.add('removeItem');
     
-    todoDiv.append(priorityDiv);
-    todoDiv.append(createdAtDiv);
-    todoDiv.append(textDiv);
+    editDiv.append(editClick);
+    todoDiv.append(editDiv);
+    todoDiv.appendChild(priority);
+    todoDiv.appendChild(createdAtDiv);
+    todoDiv.appendChild(textDiv);
     todoDiv.append(checkButton);
     todoDiv.append(removeButton);
     
@@ -181,12 +183,22 @@ async function pageInitialize(){
     applyInitialTheme();
     let inputElem = document.getElementById('text-input');
     inputElem.focus();
+    showSpinner();
     let myContent = await getTodoJson();
+    hideSpinner();
     for(let i = 0; i < myContent.length; i++){
         createListItem(myContent, i);
         todoList = myContent;
     }
     counter();
+}
+
+function applyInitialTheme () {
+    const theme = window.localStorage.getItem('site-theme');
+    if (theme !== null) {
+        const htmlTag = document.getElementsByTagName('html')[0];
+        htmlTag.setAttribute('data-theme', theme);
+    }
 }
 
 function counter(){
@@ -214,13 +226,13 @@ function viewSectionEdit(event){
 function removeItem(event){//removes an item from the todo list and the server
     let temp = event.target;
     const todo = temp.parentElement;
-    let itemTime = todo.children[2].innerHTML;
+    let itemTime = todo.children[2].innerText;
     for(let i = 0; i < todoList.length; i++){
         if(todoList[i].date === itemTime){
             todoList.splice(i, 1);
             myTodo = {'my-todo': todoList};
             updateTodoJson();
-            event.target.parentElement.remove();
+            todo.remove();
             counter();
         }
     }
@@ -237,6 +249,8 @@ function completeTodo(event){//toggles between completed & uncompleted, persist 
             todoList[i].completed = !todoList[i].completed;
             myTodo = {'my-todo': todoList};
             updateTodoJson();
+            createListItem(todoList, i);
+            event.target.parentElement.remove();
         }
     }
 }
@@ -244,7 +258,7 @@ function completeTodo(event){//toggles between completed & uncompleted, persist 
 function editItemBox(event){
     event.preventDefault();
     const editInput = document.createElement('input');
-    editInput.classList.add('description-input');
+    editInput.classList.add('edit-input');
     const editDiv = event.target.parentElement;
     const saveEdit = document.createElement('button');
     saveEdit.classList.add('use-edit');
@@ -277,7 +291,6 @@ function useEdit(event){
 function findText(){
     const tempText = document.getElementById('search-for');
     let search = tempText.value;
-  
     let counter = 0;
     for(let i = 0; i < todoList.length; i++){
         counter++;
@@ -307,20 +320,23 @@ function findText(){
 }
 
 function darkMode(){
+    console.log("shalom");
     const htmlTag = document.getElementsByTagName("html")[0]
     if (htmlTag.hasAttribute('data-theme')) {
-        htmlTag.removeAttribute('data-theme')
+        htmlTag.removeAttribute('data-theme');
         return window.localStorage.removeItem('site-theme');
     }
     htmlTag.setAttribute("data-theme", "dark");
     window.localStorage.setItem('site-theme', 'dark');
 }
 
-function applyInitialTheme () {
-    const theme = window.localStorage.getItem('site-theme');
-    if (theme !== null) {
-        const htmlTag = document.getElementsByTagName('html')[0];
-        htmlTag.setAttribute('data-theme', theme);
-    }
-}
-
+function showSpinner() {
+    spinner.className = "show";
+    setTimeout(() => {
+      spinner.className = spinner.className.replace("show", "");
+    }, 5000);
+  }
+  
+  function hideSpinner() {
+    spinner.className = spinner.className.replace("show", "");
+  }
