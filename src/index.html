@@ -10,9 +10,9 @@
   </head>
   <body>
     <header>
-      <a class="social-links" href="https://github.com/KanerA" target="_blank"><i class="fab fa-github"></i></a>
-        <a class="social-links" href="https://www.instagram.com/assafkaner/" target="_blank"><i class="fab fa-instagram"></i></a>
-        <a class="social-links" href="https://www.linkedin.com/in/assaf-kaner-33a258199/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+      <a class="social-links" id="github" href="https://github.com/KanerA" target="_blank"><i class="fab fa-github"></i></a>
+        <a class="social-links" id="instagram" href="https://www.instagram.com/assafkaner/" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a class="social-links" id="linkedin" href="https://www.linkedin.com/in/assaf-kaner-33a258199/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
         <button class="shiftMode">mode</button>
     </header>
     <main>
@@ -22,7 +22,10 @@
         <button id="search">Search</button>
       </div>
       <section class="control-section">
-        <span id="counter"></span>
+        <div>  
+          <span id="counter"></span>
+          <span>To Do's</span>
+        </div>
         <button id="sort-button">Sort</button>
         <input type="text" id="text-input" placeholder="add To-Do" required>
         <select name="priority" id="priority-selector">

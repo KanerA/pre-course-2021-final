@@ -80,6 +80,7 @@ main {
 .todo-text .todo-priority .todo-created-at {
   display: inline;
 }
+
 .todo-text {
   margin: 5px;
   text-align: center;
@@ -116,32 +117,21 @@ main {
   padding: 5px;
 }
 
-.checkMark {
+.checkMark,
+.removeItem,
+.editItem {
   background: none;
   color: inherit;
   border: none;
-  padding: 0;
+  padding: 5px;
   font: inherit;
   cursor: pointer;
   outline: inherit;
-  padding: 5px;
 }
 
-.removeItem {
-  background: none;
-  color: inherit;
-  border: none;
-  padding: 5px;
-  font: inherit;
-  cursor: pointer;
-  outline: inherit;
-}
-.checkMark:hover {
-  background-color: var(--global-main-color);
-  color: var(--global-secondary-color);
-  border-radius: 10%;
-}
-.removeItem:hover {
+.checkMark:hover,
+.removeItem:hover,
+.editItem:hover {
   background-color: var(--global-main-color);
   color: var(--global-secondary-color);
   border-radius: 10%;
@@ -149,7 +139,11 @@ main {
 
 .fa-check-square,
 .fa-trash,
-.fa-plus {
+.fa-plus,
+.fa-edit,
+.fa-github,
+.fa-instagram,
+.fa-linkedin {
   pointer-events: none;
 }
 

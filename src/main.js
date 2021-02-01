@@ -1,4 +1,5 @@
 const addBtn = document.querySelector('#add-button');
+const inputElem = document.getElementById('text-input');
 const viewSection = document.querySelector('.view-section');
 const sortBtn = document.querySelector('#sort-button');
 const searchBtn = document.querySelector('#search');
@@ -29,12 +30,13 @@ alertSpan.addEventListener('click', function(){
     this.parentElement.style.display='none';
 });
 shiftMode.addEventListener('click', darkMode);
+
 // ---------------- Functions --------------------------- //
 
 function addToDo(event){
     event.preventDefault();
     // ------ check if input is empty ------ //
-    let inputElem = document.getElementById('text-input');
+    
     let textInput = inputElem.value;
     if(textInput === ""){
         alert('must add to-do');
@@ -47,8 +49,11 @@ function addToDo(event){
 
     const editClick = document.createElement('button')
     editClick.classList.add('editItem');
-    editClick.innerHTML = `<i class="fas fa-edit"></i>`
-    todoDiv.append(editClick);
+    editClick.innerHTML = `<i class="fas fa-edit"></i>`;
+    const editDiv = document.createElement('div');
+    editDiv.classList.add('editDiv');
+    editDiv.append(editClick);
+    todoDiv.append(editDiv);
     
     const priority = document.createElement('div');
     priority.classList.add('todo-priority');
@@ -117,8 +122,11 @@ function createListItem(myArr, index){
 
     const editClick = document.createElement('button')
     editClick.classList.add('editItem');
-    editClick.innerHTML = `<i class="fas fa-edit"></i>`
-    todoDiv.append(editClick);
+    editClick.innerHTML = `<i class="fas fa-edit"></i>`;
+    const editDiv = document.createElement('div');
+    editDiv.classList.add('editDiv');
+    editDiv.append(editClick);
+    todoDiv.append(editDiv);
 
     const priorityDiv = document.createElement('div');
     priorityDiv.classList.add('todo-priority');
@@ -159,11 +167,11 @@ function createListItem(myArr, index){
 }
 
 async function updateTodoJson(){
-    await fetch("https://api.jsonbin.io/v3/b/6012eb097bfaff74c39959f7",{method:'put',headers: {'content-type': 'application/json'},body: JSON.stringify(myTodo)});
+    await fetch("https://api.jsonbin.io/v3/b/601718c40ba5ca5799d1ce31",{method:'put',headers: {'content-type': 'application/json'},body: JSON.stringify(myTodo)});
 }
 
 async function getTodoJson(){
-    let response = await fetch('https://api.jsonbin.io/v3/b/6012eb097bfaff74c39959f7/latest');
+    let response = await fetch('https://api.jsonbin.io/v3/b/601718c40ba5ca5799d1ce31/latest');
     let jsonResponse = await response.json(); 
     let myList = jsonResponse["record"];
     return myList['my-todo'];      
@@ -183,7 +191,7 @@ async function pageInitialize(){
 
 function counter(){
     let counter = document.querySelector('#counter');
-    counter.innerHTML = todoList.length;
+    counter.innerText = todoList.length;
 }
 
 function viewSectionEdit(event){
@@ -199,6 +207,7 @@ function viewSectionEdit(event){
     }
     else if(temp.classList[0] === 'use-edit'){
         useEdit(event);
+        event.target.remove();
     }
 }
 
@@ -234,23 +243,26 @@ function completeTodo(event){//toggles between completed & uncompleted, persist 
 
 function editItemBox(event){
     event.preventDefault();
-    editDiv = document.createElement('div');
-    editInput = document.createElement('input');
+    const editInput = document.createElement('input');
     editInput.classList.add('description-input');
-    editDiv.append(editInput);
-    saveEdit = document.createElement('button');
+    const editDiv = event.target.parentElement;
+    const saveEdit = document.createElement('button');
     saveEdit.classList.add('use-edit');
     saveEdit.innerText = 'Edit';
+    editDiv.append(editInput);
     editDiv.append(saveEdit);
-    event.target.append(editDiv);
 }
 
 function useEdit(event){
     event.preventDefault();
-    const editInput = event.target.parentElement.children[0];
+    const editInput = event.target.parentElement.children[1];
     const editValue = editInput.value;
-    let temp = editInput.parentElement.parentElement.parentElement.children[3].innerText;
-    editInput.parentElement.parentElement.parentElement.children[3].innerText = editValue;
+    if(editValue === ""){
+        alert('no text to edit');
+        return;
+    }
+    let temp = editInput.parentElement.parentElement.children[3].innerText;
+    editInput.parentElement.parentElement.children[3].innerText = editValue;
     for(let i=0; i < todoList.length; i++){
         if(todoList[i].text === temp){
             todoList[i].text = editValue;
@@ -259,17 +271,16 @@ function useEdit(event){
             break;
         }
     }
-    editInput.parentElement.remove();
+    editInput.remove();
 }
 
 function findText(){
-    let tempText = document.getElementById('search-for');
-    const search = tempText.value;
+    const tempText = document.getElementById('search-for');
+    let search = tempText.value;
   
     let counter = 0;
     for(let i = 0; i < todoList.length; i++){
         counter++;
-        
         if(todoList[i].text.includes(search)){
             let temp = todoList[i];
             todoList.splice(i, 1);
@@ -291,6 +302,7 @@ function findText(){
             pageHead.appendChild(alertDiv);
         }   
     }
+    tempText.value = "";
     counter = 0; 
 }
 
@@ -311,5 +323,4 @@ function applyInitialTheme () {
         htmlTag.setAttribute('data-theme', theme);
     }
 }
-
 
