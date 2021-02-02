@@ -1,3 +1,4 @@
+// ---------------- globally used variables ------------------//
 const addBtn = document.querySelector('#add-button');
 const inputElem = document.getElementById('text-input');
 const viewSection = document.querySelector('.view-section');
@@ -43,7 +44,7 @@ function addToDo(event){
         return false;
     }
     
-    // ------ create the divs for each To-Do task ------- //
+    // ------ create the divs for each To-Do task ------- // used when adding a list item
     const todoDiv = document.createElement('div');
     todoDiv.classList.add('todo-container');
 
@@ -94,7 +95,6 @@ function addToDo(event){
     // ----- create an object for each to-do task ------ //
     todoList.push(new toDoTask(priority.innerHTML, textInput, timeSQL, completed));
 
-
     // ------ adding counter of to-do's ------- //
     counter();
     
@@ -118,9 +118,10 @@ function sortToDo(){
     }
 }
 
-function createListItem(myArr, index){
+function createListItem(myArr, index){// creating the to-do's on screen after sort, GET, search
     const todoDiv = document.createElement('div');
     todoDiv.classList.add('todo-container');
+
     const editClick = document.createElement('button')
     editClick.classList.add('editItem');
     editClick.innerHTML = `<i class="fas fa-edit"></i>`;
@@ -167,18 +168,18 @@ function createListItem(myArr, index){
 
 }
 
-async function updateTodoJson(){
-    await fetch("https://api.jsonbin.io/v3/b/601718c40ba5ca5799d1ce31",{method:'put',headers: {'content-type': 'application/json'},body: JSON.stringify(myTodo)});
+async function updateTodoJson(){      // upsates data to jsonbin
+    await fetch("https://api.jsonbin.io/v3/b/601890efdde2a87f921c4043",{method:'put',headers: {'content-type': 'application/json'},body: JSON.stringify(myTodo)});
 }
 
-async function getTodoJson(){
-    let response = await fetch('https://api.jsonbin.io/v3/b/601718c40ba5ca5799d1ce31/latest');
+async function getTodoJson(){     //gets data from jsonbin
+    let response = await fetch('https://api.jsonbin.io/v3/b/601890efdde2a87f921c4043/latest');
     let jsonResponse = await response.json(); 
     let myList = jsonResponse["record"];
-    return myList['my-todo'];      
+    return myList["my-todo"];      
 }
 
-async function pageInitialize(){
+async function pageInitialize(){// initializing the page, with the theme, GET from the JSONBin, and creating the list
     applyInitialTheme();
     let inputElem = document.getElementById('text-input');
     inputElem.focus();
@@ -192,12 +193,12 @@ async function pageInitialize(){
     counter();
 }
 
-function applyInitialTheme () {
+function applyInitialTheme () {// applying the light/dark mode, depending on what was used last
     const theme = window.localStorage.getItem('site-theme');
     if (theme !== null) {
         const htmlTag = document.getElementsByTagName('html')[0];
         htmlTag.setAttribute('data-theme', theme);
-        if(theme === 'dark'){
+        if(theme === 'dark'){    //making the mode button to match the starter theme (light/dark)
             shiftMode.innerText = 'Dark';
         }
         else{
@@ -211,7 +212,7 @@ function counter(){
     counter.innerText = todoList.length;
 }
 
-function viewSectionEdit(event){
+function viewSectionEdit(event){// controls the click events on the to-do tasks
     let temp = event.target;
     if(temp.classList[0] === 'removeItem'){
         removeItem(event);
@@ -223,12 +224,13 @@ function viewSectionEdit(event){
         editItemBox(event);
     }
     else if(temp.classList[0] === 'use-edit'){
-        useEdit(event);
-        event.target.remove();
+        if(useEdit(event)){                   //checking if the edit input box was empty
+            event.target.remove();            // if it wasnt and text is updated, deletes the edit button
+        }
     }
 }
 
-function removeItem(event){//removes an item from the todo list and the server
+function removeItem(event){                     //removes an item from the todo list and the server
     let temp = event.target;
     const todo = temp.parentElement;
     let itemTime = todo.children[2].innerText;
@@ -243,7 +245,7 @@ function removeItem(event){//removes an item from the todo list and the server
     }
 }
 
-function completeTodo(event){//toggles between completed & uncompleted, persist through reloads
+function completeTodo(event){                   //toggles between completed & uncompleted, persist through reloads
     let temp = event.target;
     temp.parentElement.classList.toggle('completed');
     const todo = temp.parentElement;
@@ -279,19 +281,20 @@ function useEdit(event){
     const editValue = editInput.value;
     if(editValue === ""){
         alert('no text to edit');
-        return;
+        return false;
     }
-    let temp = editInput.parentElement.parentElement.children[3].innerText;
-    editInput.parentElement.parentElement.children[3].innerText = editValue;
+    let temp = editInput.parentElement.parentElement.children[3].innerText;// takes the text value from the div that is edited
+    editInput.parentElement.parentElement.children[3].innerText = editValue;// puts the new value we entered at the input box
     for(let i=0; i < todoList.length; i++){
         if(todoList[i].text === temp){
             todoList[i].text = editValue;
-            myTodo = {'my-todo': todoList};
+            myTodo = {'my-todo': todoList};             //updating the json format with the new list after changing the text
             updateTodoJson();
             break;
         }
     }
-    editInput.remove();
+    editInput.remove();//removing the edit input box
+    return true;
 }
 
 function findText(){
@@ -300,7 +303,7 @@ function findText(){
     let counter = 0;
     for(let i = 0; i < todoList.length; i++){
         counter++;
-        if(todoList[i].text.includes(search)){
+        if(todoList[i].text.includes(search) && search !== ""){
             let temp = todoList[i];
             todoList.splice(i, 1);
             todoList.unshift(temp);
@@ -308,6 +311,8 @@ function findText(){
             for(let j=0; j<todoList.length; j++){
                 createListItem(todoList, j);
             }
+            console.log(todoList.length);
+            console.log(counter);
             break;
         }
         else if(counter === todoList.length)//alert for search not found
@@ -335,7 +340,6 @@ function darkMode(){
     htmlTag.setAttribute("data-theme", "dark");
     window.localStorage.setItem('site-theme', 'dark');
     shiftMode.innerText = 'Dark';
-    
 }
 
 function showSpinner() {
@@ -345,6 +349,6 @@ function showSpinner() {
     }, 5000);
   }
   
-  function hideSpinner() {
+function hideSpinner() {
     spinner.className = spinner.className.replace("show", "");
-  }
+}
