@@ -208,8 +208,8 @@ a:hover {
   background-color: #f44336; /* Red */
   color: white;
   margin-bottom: 15px;
-  width: 80%;
-  margin: 0 10%;
+  width: 50%;
+  margin: 0 25%;
   transition: all 0.3s;
 }
 /* The alert close button */
