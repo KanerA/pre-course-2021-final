@@ -214,19 +214,23 @@ function counter(){
 
 function viewSectionEdit(event){// controls the click events on the to-do tasks
     let temp = event.target;
-    if(temp.classList[0] === 'removeItem'){
-        removeItem(event);
-    }
-    else if(temp.classList[0] === 'checkMark'){
-        completeTodo(event);
-    }
-    else if(temp.classList[0] === 'editItem'){
-        editItemBox(event);
-    }
-    else if(temp.classList[0] === 'use-edit'){
-        if(useEdit(event)){                   //checking if the edit input box was empty
-            event.target.remove();            // if it wasnt and text is updated, deletes the edit button
-        }
+    switch (temp.classList[0]) {
+        case 'removeItem':
+            removeItem(event);
+            break;
+        case 'checkMark':
+            completeTodo(event);
+            break;
+        case 'editItem':
+            editItemBox(event);
+            break;
+        case 'use-edit':
+            if(useEdit(event)){          //checking if the edit input box was empty
+                event.target.remove();   // if it wasnt and text is updated, deletes the edit button
+            }
+            break;
+        default:
+            break;
     }
 }
 
