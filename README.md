@@ -6,6 +6,8 @@ On this page you will see the features I added to the app, and what they do.
 
 Hope you enjoy the use and features.
 
+# link to the project's github pages: https://kanera.github.io/pre-course-2021-final/src/
+
 # My To-DO List's Features:
 
 ## Dark Mode:
