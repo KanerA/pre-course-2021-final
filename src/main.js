@@ -277,6 +277,7 @@ function editItemBox(event){
     saveEdit.innerText = 'Edit';
     editDiv.append(editInput);
     editDiv.append(saveEdit);
+    editInput.focus();
 }
 
 function useEdit(event){
