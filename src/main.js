@@ -172,25 +172,28 @@ async function updateTodoJson(){      // upsates data to jsonbin
     await fetch("https://api.jsonbin.io/v3/b/601890efdde2a87f921c4043",{method:'put',headers: {'content-type': 'application/json'},body: JSON.stringify(myTodo)});
 }
 
-async function getTodoJson(){     //gets data from jsonbin
-    let response = await fetch('https://api.jsonbin.io/v3/b/601890efdde2a87f921c4043/latest');
-    let jsonResponse = await response.json(); 
-    let myList = jsonResponse["record"];
-    return myList["my-todo"];      
+function getTodoJson(){     //gets data from jsonbin
+    showSpinner();
+    const res = fetch('https://api.jsonbin.io/v3/b/601890efdde2a87f921c4043/latest');
+    res.then((resJson) => {
+        resJson.json().then((resFinal) => {
+                let myContent = resFinal.record["my-todo"];
+                for(let i = 0; i < myContent.length; i++){
+                    createListItem(myContent, i);
+                }
+                todoList = myContent;
+                console.log(myContent);
+                hideSpinner();
+                counter();
+            })
+        })     
 }
 
-async function pageInitialize(){// initializing the page, with the theme, GET from the JSONBin, and creating the list
+async function pageInitialize(){ // initializing the page, with the theme, GET from the JSONBin, and creating the list
     applyInitialTheme();
     let inputElem = document.getElementById('text-input');
     inputElem.focus();
-    showSpinner();
-    let myContent = await getTodoJson();
-    hideSpinner();
-    for(let i = 0; i < myContent.length; i++){
-        createListItem(myContent, i);
-        todoList = myContent;
-    }
-    counter();
+    getTodoJson();
 }
 
 function applyInitialTheme () {// applying the light/dark mode, depending on what was used last
