@@ -7,6 +7,7 @@
     rgb(202, 156, 29) 100%
   );
   --high-priority: red;
+  --spinner: #3f3e3e;
 }
 html[data-theme="dark"] {
   --global-main-color: #606060;
@@ -17,6 +18,7 @@ html[data-theme="dark"] {
     rgb(12, 11, 11) 100%
   );
   --high-priority: rgb(163, 28, 51);
+  --spinner: rgb(31, 29, 29);
 }
 body {
   margin: 0;
@@ -300,22 +302,22 @@ a:hover {
 /* loading spinner animation */
 @keyframes spin {
   0% {
-    border-top: 5px solid var(--global-secondary-color);
+    border-top: 5px solid var(--spinner);
   }
   25% {
     border-top: 5px solid white;
-    border-right: 5px solid var(--global-secondary-color);
+    border-right: 5px solid var(--spinner);
   }
   50% {
     border-right: 5px solid white;
-    border-bottom: 5px solid var(--global-secondary-color);
+    border-bottom: 5px solid var(--spinner);
   }
   75% {
     border-bottom: 5px solid white;
-    border-left: 5px solid var(--global-secondary-color);
+    border-left: 5px solid var(--spinner);
   }
   100% {
-    border-top: 5px solid var(--global-secondary-color);
+    border-top: 5px solid var(--spinner);
   }
 }
 
