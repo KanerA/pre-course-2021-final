@@ -112,7 +112,7 @@ function sortToDo(){
         return b.priority - a.priority;
     });
     
-    viewSection.innerHTML = "";
+    viewSection.innerText = "";
     for(let i=0; i < todoList.length; i++){
         createListItem(todoList, i);
     }
@@ -168,7 +168,7 @@ function createListItem(myArr, index){// creating the to-do's on screen after so
 
 }
 
-async function updateTodoJson(){      // upsates data to jsonbin
+async function updateTodoJson(){      // updates data to jsonbin
     await fetch("https://api.jsonbin.io/v3/b/601890efdde2a87f921c4043",{method:'put',headers: {'content-type': 'application/json'},body: JSON.stringify(myTodo)});
 }
 

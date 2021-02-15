@@ -101,7 +101,7 @@ main {
   width: 15rem;
 }
 #priority-selector {
-  height: 45px;
+  height: 1.7rem;
 }
 #add-button {
   height: 1.5rem;
@@ -332,7 +332,7 @@ a:hover {
   }
 }
 
-@media only screen and (max-width: 760px) {
+@media only screen and (max-width: 825px) {
   body {
     font-size: 14px;
     transition: all 0.5s;
@@ -403,5 +403,68 @@ a:hover {
     outline: inherit;
     padding: 5px;
     margin: 0 10px;
+  }
+}
+@media only screen and (max-width: 430px) {
+  body {
+    font-size: 14px;
+    transition: all 0.5s;
+  }
+  #search-for {
+    width: 3rem;
+    font-size: 12px;
+  }
+  #text-input {
+    margin: 0;
+    padding-left: 3px;
+    height: 1rem;
+    width: 3.5rem;
+    font-size: 12px;
+  }
+  #priority-selector {
+    height: 1rem;
+  }
+  a.social-links {
+    color: var(--global-secondary-color);
+    font-size: 20px;
+    width: auto;
+    margin: 2%;
+    transition: all 0.3s;
+  }
+  .countContainer {
+    width: auto;
+  }
+}
+@media only screen and (max-width: 385px) {
+  body {
+    font-size: 10px;
+    transition: all 0.5s;
+  }
+  #search-for {
+    width: 2rem;
+    font-size: 9px;
+  }
+  #text-input {
+    font-size: 10px;
+    margin: 0;
+    padding-left: 3px;
+    height: 1rem;
+    width: 3rem;
+  }
+  #add-button {
+    height: 1.2rem;
+  }
+  #priority-selector {
+    height: 1rem;
+  }
+  a.social-links {
+    color: var(--global-secondary-color);
+    font-size: 20px;
+    width: auto;
+    margin: 2%;
+    transition: all 0.3s;
+  }
+  .countContainer {
+    width: 5%;
   }
 }
