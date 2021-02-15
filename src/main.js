@@ -101,7 +101,7 @@ function addToDo(event){
     // ----- clear input field and focus for next input --- //
     inputElem.value = "";
     inputElem.focus();
-    
+
     // ----- updating the JSONbin.io ----- //
     myTodo = {'my-todo': todoList};
     updateTodoJson();
@@ -168,8 +168,13 @@ function createListItem(myArr, index){// creating the to-do's on screen after so
 
 }
 
-async function updateTodoJson(){      // updates data to jsonbin
-    await fetch("https://api.jsonbin.io/v3/b/601890efdde2a87f921c4043",{method:'put',headers: {'content-type': 'application/json'},body: JSON.stringify(myTodo)});
+function updateTodoJson(){ // updates data to jsonbin
+    showSpinner();
+    fetch("https://api.jsonbin.io/v3/b/601890efdde2a87f921c4043",{method:'put',headers: {'content-type': 'application/json'},body: JSON.stringify(myTodo)})
+    .then((res) => {
+        hideSpinner();
+    });
+
 }
 
 function getTodoJson(){     //gets data from jsonbin
