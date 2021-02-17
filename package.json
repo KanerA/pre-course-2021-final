@@ -4,14 +4,15 @@
   "description": "This exam will include most of the topics you learn during the last weeks, feel free go back to the mini tasks you had and use them for solving this exam. This repository include basic structure for todo list application you can change or modify it. [For more details](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/div) The task is to create a todo application by following the requirements",
   "main": "main.js",
   "scripts": {
-    "test": "jest --verbose"
+    "test": "jest --verbose",
+    "dev": "nodemon ./backend/index.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/listguy/pre-course-2021-final.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Assaf",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/listguy/pre-course-2021-final/issues"
@@ -23,5 +24,9 @@
     "nock": "^13.0.6",
     "nock-puppeteer": "^1.0.2",
     "puppeteer": "^4.0.0"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7"
   }
 }
