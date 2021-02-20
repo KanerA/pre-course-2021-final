@@ -196,6 +196,12 @@ async function putTodoJson(binId, todo){ // updates data to local server
     await fetch(`http://localhost:3000/v3/b/${binId}`,{method:'put',headers: {'content-type': 'application/json'},body: JSON.stringify(todo)})
 }
 
+async function deleteTodoJson(binId){
+    showSpinner();
+    await fetch(`http://localhost:3000/v3/b/${binId}`, {method:'delete',headers: {'content-type': 'application/json'}});
+    hideSpinner();
+}
+
 async function pageInitialize(){ // initializing the page, with the theme, GET from the JSONBin, and creating the list
     applyInitialTheme();
     let inputElem = document.getElementById('text-input');
