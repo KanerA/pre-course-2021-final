@@ -95,8 +95,7 @@ function addToDo(event){
     // ----- create an object for each to-do task ------ //
     let myTodo = new toDoTask(priority.innerHTML, textInput, timeSQL, completed)
     // ----- updating the JSONbin.io ----- //
-    myTodo = {'my-todo': todoList};
-    updateTodoJson();
+    postTodoJson(myTodo);
 }
 
 // -------- sorting function ---------- //
@@ -256,9 +255,9 @@ function removeItem(event){                     //removes an item from the todo 
     let itemTime = todo.children[2].innerText;
     for(let i = 0; i < todoList.length; i++){
         if(todoList[i].date === itemTime){
+            let id = todoList[i].id;
+            deleteTodoJson(id);
             todoList.splice(i, 1);
-            myTodo = {'my-todo': todoList};
-            updateTodoJson();
             todo.remove();
             counter();
         }
@@ -273,8 +272,10 @@ function completeTodo(event){                   //toggles between completed & un
     for(let i = 0; i < todoList.length; i++){
         if(todoList[i].date === itemTime){
             todoList[i].completed = !todoList[i].completed;
-            myTodo = {'my-todo': todoList};
-            updateTodoJson();
+            task = todoList[i];
+            let id = todoList[i].id;
+            console.log(id);
+            putTodoJson(id, task);
             if(todoList[i].completed){
                 createListItem(todoList, i);
                 event.target.parentElement.remove();
@@ -309,8 +310,9 @@ function useEdit(event){
     for(let i=0; i < todoList.length; i++){
         if(todoList[i].text === temp){
             todoList[i].text = editValue;
-            myTodo = {'my-todo': todoList};             //updating the json format with the new list after changing the text
-            updateTodoJson();
+            task = todoList[i];
+            let id = todoList[i].id;
+            putTodoJson(id, task);
             break;
         }
     }
