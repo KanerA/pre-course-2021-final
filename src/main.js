@@ -93,19 +93,12 @@ function addToDo(event){
         priority.classList.add('high-priority');
     }
     // ----- create an object for each to-do task ------ //
-    todoList.push(new toDoTask(priority.innerHTML, textInput, timeSQL, completed));
-
-    // ------ adding counter of to-do's ------- //
-    counter();
-    
-    // ----- clear input field and focus for next input --- //
-    inputElem.value = "";
-    inputElem.focus();
-
+    let myTodo = new toDoTask(priority.innerHTML, textInput, timeSQL, completed)
     // ----- updating the JSONbin.io ----- //
     myTodo = {'my-todo': todoList};
     updateTodoJson();
 }
+
 // -------- sorting function ---------- //
 function sortToDo(){
     todoList.sort(function(a, b){
@@ -127,7 +120,7 @@ function createListItem(myArr, index){// creating the to-do's on screen after so
     editClick.innerHTML = `<i class="fas fa-edit"></i>`;
     const editDiv = document.createElement('div');
     editDiv.classList.add('editDiv');
-    
+
     const priority = document.createElement('div');
     priority.classList.add('todo-priority');
     priority.append(myArr[index].priority);
@@ -168,13 +161,19 @@ function createListItem(myArr, index){// creating the to-do's on screen after so
 
 }
 
-function updateTodoJson(){ // updates data to jsonbin
+function postTodoJson(myTodo){ // updates data to jsonbin
     showSpinner();
-    fetch("https://api.jsonbin.io/v3/b/601890efdde2a87f921c4043",{method:'put',headers: {'content-type': 'application/json'},body: JSON.stringify(myTodo)})
+    fetch("http://localhost:3000/v3/b/",{method:'post',headers: {'content-type': 'application/json'},body: JSON.stringify(myTodo)})
     .then((res) => {
-        hideSpinner();
+        return res.json().then((data) => {
+            myTodo.id = data.id;
+            todoList.push(myTodo);
+            counter();
+            inputElem.value = "";
+            inputElem.focus();
+            hideSpinner();
+        })
     });
-
 }
 
 function getTodoJson(){     //gets data from jsonbin
