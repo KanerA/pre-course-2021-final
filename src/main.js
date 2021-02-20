@@ -178,17 +178,16 @@ function postTodoJson(myTodo){ // updates data to jsonbin
 
 function getTodoJson(){     //gets data from jsonbin
     showSpinner();
-    const res = fetch('https://api.jsonbin.io/v3/b/601890efdde2a87f921c4043/latest');
+    const res = fetch('http://localhost:3000/v3/b/');
     res.then((resJson) => {
-        resJson.json().then((resFinal) => {
-                let myContent = resFinal.record["my-todo"];
-                for(let i = 0; i < myContent.length; i++){
-                    createListItem(myContent, i);
-                }
-                todoList = myContent;
-                console.log(myContent);
-                hideSpinner();
-                counter();
+        resJson.json().then((myContent) => {
+            console.log(myContent);
+            for(let i = 0; i < myContent.length; i++){
+                createListItem(myContent, i);
+            }
+            todoList = myContent;
+            hideSpinner();
+            counter();
             })
         })     
 }
