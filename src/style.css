@@ -7,7 +7,7 @@
     rgb(202, 156, 29) 100%
   );
   --high-priority: red;
-  --spinner: #3f3e3e;
+  --spinner: #d31515;
 }
 html[data-theme="dark"] {
   --global-main-color: #606060;
@@ -18,7 +18,7 @@ html[data-theme="dark"] {
     rgb(12, 11, 11) 100%
   );
   --high-priority: rgb(163, 28, 51);
-  --spinner: rgb(31, 29, 29);
+  --spinner: rgb(37, 221, 197);
 }
 body {
   margin: 0;
@@ -286,7 +286,7 @@ a:hover {
   width: 80px;
   height: 80px;
   border: 5px solid white;
-  border-radius: 30%;
+  border-radius: 50%;
   position: absolute;
   top: 0;
   bottom: 0;
