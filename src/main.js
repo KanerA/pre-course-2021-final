@@ -176,7 +176,7 @@ function postTodoJson(myTodo){ // updates data to jsonbin
     });
 }
 
-function getTodoJson(){     //gets data from jsonbin
+function getTodoJson(){     //gets data from local server
     showSpinner();
     const res = fetch('http://localhost:3000/v3/b/');
     res.then((resJson) => {
@@ -190,6 +190,10 @@ function getTodoJson(){     //gets data from jsonbin
             counter();
             })
         })     
+}
+
+async function putTodoJson(binId, todo){ // updates data to local server
+    await fetch(`http://localhost:3000/v3/b/${binId}`,{method:'put',headers: {'content-type': 'application/json'},body: JSON.stringify(todo)})
 }
 
 async function pageInitialize(){ // initializing the page, with the theme, GET from the JSONBin, and creating the list
